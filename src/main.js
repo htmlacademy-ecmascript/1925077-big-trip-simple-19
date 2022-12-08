@@ -1,13 +1,19 @@
 import NewFiltersForms from './view/list-filter.js';
 import NewSortingForm from './view/list-sort.js';
+import NewEmptyEventsList from './view/empty-events-list.js';
+import NewEventItem from './view/event-item.js';
 import { render } from './render.js';
 
 
-const headerElement = document.querySelector('header');
-const mainElement = document.querySelector('main');
-
-const siteListFilterElement = headerElement.querySelector('.trip-controls__filters');
-const siteSortingElement = mainElement.querySelector('.trip-events');
+const siteListFilterElement = document.querySelector('.trip-controls__filters');
+const tripEventsLikeMainElement = document.querySelector('.trip-events');
 
 render(new NewFiltersForms(), siteListFilterElement);
-render(new NewSortingForm(), siteSortingElement);
+render(new NewSortingForm(), tripEventsLikeMainElement);
+render(new NewEmptyEventsList(), tripEventsLikeMainElement);
+
+const emptyEventsListElement = tripEventsLikeMainElement.querySelector('.trip-events__list');
+
+for (let i = 0; i < 3; i++) {
+  render(new NewEventItem(), emptyEventsListElement);
+}
