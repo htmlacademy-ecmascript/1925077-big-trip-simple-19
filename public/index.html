@@ -27,6 +27,7 @@
           <div class="trip-controls__filters">
             <h2 class="visually-hidden">Filter events</h2>
             <!-- Фильтры -->
+            <filter-view></filter-view>
           </div>
         </div>
 
@@ -38,10 +39,20 @@
     <div class="page-body__container">
       <section class="trip-events">
         <h2 class="visually-hidden">Trip events</h2>
+        <sort-view class="trip-events__trip-sort"></sort-view>
 
         <!-- Сортировка -->
 
         <!-- Контент -->
+
+
+        <list-view class="trip-events__list">
+          <new-point-editor-view></new-point-editor-view>
+
+          <point-view></point-view>
+          <point-view></point-view>
+          <point-view></point-view>
+        </list-view>
       </section>
     </div>
   </main>
