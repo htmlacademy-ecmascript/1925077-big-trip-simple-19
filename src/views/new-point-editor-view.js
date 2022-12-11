@@ -5,6 +5,7 @@ import DestinationView from './common/destination-view';
 import DateTimesView from './common/date-times-view';
 import BasicPriceView from './common/basic-price-view';
 import OffersTitleView from './common/offers-title-view';
+import DestinationDetailsView from './common/destination-details-view';
 
 export default class NewPointEditorView extends View {
   constructor() {
@@ -28,15 +29,10 @@ export default class NewPointEditorView extends View {
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Cancel</button>
         </header>
+
         <section class="event__details">
-
           <${OffersTitleView}></${OffersTitleView}>
-
-          <!-- OffersView, DestinationDetailsView
-          <section class="event__section  event__section--offers">
-          </section>
-          -->
-
+          <${DestinationDetailsView}></${DestinationDetailsView}>
         </section>
       </form>
     `;
