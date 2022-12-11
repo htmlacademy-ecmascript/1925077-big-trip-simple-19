@@ -4,7 +4,7 @@ import PointTypeView from './common/point-type-view';
 import DestinationView from './common/destination-view';
 import DateTimesView from './common/date-times-view';
 import BasicPriceView from './common/basic-price-view';
-import OffersTitleView from './common/offers-title-view';
+import OffersView from './common/offers-view';
 import DestinationDetailsView from './common/destination-details-view';
 
 export default class NewPointEditorView extends View {
@@ -31,7 +31,7 @@ export default class NewPointEditorView extends View {
         </header>
 
         <section class="event__details">
-          <${OffersTitleView}></${OffersTitleView}>
+          <${OffersView}></${OffersView}>
           <${DestinationDetailsView}></${DestinationDetailsView}>
         </section>
       </form>

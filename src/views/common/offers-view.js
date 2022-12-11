@@ -2,7 +2,7 @@ import View from '../view';
 import {html} from '../../utils';
 import '../css/event__section.css';
 
-export default class OffersTitleView extends View {
+export default class OffersView extends View {
   constructor() {
     super();
 
@@ -66,4 +66,4 @@ export default class OffersTitleView extends View {
   }
 }
 
-customElements.define(String(OffersTitleView), OffersTitleView);
+customElements.define(String(OffersView), OffersView);
