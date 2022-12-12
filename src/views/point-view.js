@@ -1,6 +1,6 @@
 import View from './view';
 import {html} from '../utils';
-import './css/point-view.css';
+import './point-view.css';
 
 export default class PointView extends View {
   constructor() {

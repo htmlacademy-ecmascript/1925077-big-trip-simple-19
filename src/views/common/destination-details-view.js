@@ -1,6 +1,5 @@
 import View from '../view';
 import {html} from '../../utils';
-import '../css/event__section.css';
 
 export default class DestinationDetailsView extends View {
   constructor() {
