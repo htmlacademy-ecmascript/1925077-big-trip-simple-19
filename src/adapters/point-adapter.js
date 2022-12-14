@@ -16,11 +16,19 @@ export default class PointAdapter extends Adapter {
     this.type = data.type;
   }
 
-  // /**
-  //  * @override
-  //  * @return {Partial<Point>}
-  //  */
-  // toJSON() {
-  //   return {}:
-  // }
+  /**
+   * @override
+   * @return {Partial<Point>}
+   */
+  toJSON() {
+    return {
+      'base_price': this.basePrice,
+      'date_from': this.startDate,
+      'date_to': this.startEnd,
+      'destination': Number(this.destinationId),
+      'id': this.id,
+      'offers': this.offersIds?.map(Number),
+      'type': this.type
+    };
+  }
 }
