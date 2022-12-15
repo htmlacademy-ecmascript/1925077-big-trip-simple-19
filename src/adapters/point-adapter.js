@@ -9,7 +9,7 @@ export default class PointAdapter extends Adapter {
 
     this.basePrice = data.base_price;
     this.startDate = data.date_from;
-    this.startEnd = data.date_to;
+    this.endDate = data.date_to;
     this.destinationId = String(data.destination);
     this.id = data.id;
     this.offersIds = data.offers?.map(String);
@@ -24,7 +24,7 @@ export default class PointAdapter extends Adapter {
     return {
       'base_price': this.basePrice,
       'date_from': this.startDate,
-      'date_to': this.startEnd,
+      'date_to': this.endDate,
       'destination': Number(this.destinationId),
       'id': this.id,
       'offers': this.offersIds?.map(Number),
