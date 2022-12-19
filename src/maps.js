@@ -6,16 +6,16 @@ import { FilterType, SortType } from './enums';
  */
 export const filterCallbackMap = {
   [FilterType.EVERYTHING]: () => true,
-  [FilterType.FUTURE]: (point) => true
+  [FilterType.FUTURE]: (point) => point.endDateAsNumber > Date.now()
 };
 
 /**
  * @type {Record<string,SortCallback<PointAdapter>>}
  */
 export const sortCallbackMap = {
-  [SortType.DAY]: () => 0,
+  [SortType.DAY]: (point, nextPoint) => point.startDateAsNumber - nextPoint.endDateAsNumber,
   [SortType.EVENT]: () => 0,
   [SortType.TIME]: () => 0,
-  [SortType.PRICE]: (point, nextPoint) => (point > nextPoint) ? 1 : -1,
+  [SortType.PRICE]: (point, nextPoint) => nextPoint.basePrice - point.basePrice,
   [SortType.OFFERS]: () => 0
 };
