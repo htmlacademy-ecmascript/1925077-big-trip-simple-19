@@ -27,4 +27,4 @@ export const formatTime = (value) => dayjs(value).format('HH:mm');
  *
  * @param {number} value
  */
-export const formNumber = (value) => value.toLocaleString('en');
+export const formatNumber = (value) => value.toLocaleString('en');
