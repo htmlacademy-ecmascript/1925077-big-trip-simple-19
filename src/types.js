@@ -97,5 +97,14 @@
  */
 
 /**
+ * @typedef OptionViewState
+ * @prop {string} title
+ * @prop {string} value
+ */
+
+/**
+ * @typedef {import('./views/filter-view').default} FilterView
  * @typedef {import('./views/list-view').default} ListView
  */
+
+

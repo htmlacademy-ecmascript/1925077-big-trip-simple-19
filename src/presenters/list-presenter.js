@@ -10,6 +10,7 @@ export default class ListPresenter extends Presenter {
     super(...arguments);
 
     this.updateView();
+    this.pointsModel.addEventListener('filter', this.handlePointsModelFilter.bind(this));
   }
 
   updateView() {
@@ -45,5 +46,9 @@ export default class ListPresenter extends Presenter {
       startDate: point.startDate,
       endDate: point.endDate
     };
+  }
+
+  handlePointsModelFilter() {
+    this.updateView();
   }
 }
