@@ -2,10 +2,7 @@ import FilterView from './views/filter-view';
 import SortView from './views/sort-view';
 import './views/point-view';
 import ListView from './views/list-view';
-import './views/new-point-editor-view';
 import NewPointEditorView from './views/new-point-editor-view';
-
-
 
 import Store from './storage';
 
@@ -78,7 +75,6 @@ Promise.all(
     new NewPointEditorPresenter(newPointEditorView, models);
   })
 
-  .catch((error) => {
+  .catch(() => {
     // log(error);
-    log(error);
   });
