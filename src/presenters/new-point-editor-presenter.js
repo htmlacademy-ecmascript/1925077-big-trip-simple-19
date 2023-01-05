@@ -13,12 +13,13 @@ export default class NewPointEditorPresenter extends Presenter {
       Object.entries(pointTitleMap).map(([value, title]) => ({title, value}));
 
     this.view.pointTypeView.setOptions(pointTypeOptions);
-    this.view.pointTypeView.setValue(PointType.BUS);
+    this.view.pointTypeView.addEventListener('change', this.handlePointTypeViewChange.bind(this));
 
 
-    const destinations = this.destinationsModel.listAll().map((destination) => destination);
+    const destinationOptions =
+      this.destinationsModel.listAll().map((item) => ({title: '', value: item.name}));
 
-    this.view.destinationView.setOptions(destinations);
+    this.view.destinationView.setOptions(destinationOptions);
 
 
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));
@@ -27,11 +28,39 @@ export default class NewPointEditorPresenter extends Presenter {
   }
 
   /**
+   * @param {PointAdapter} point
+   */
+  updateView(point) {
+    const destination = this.destinationsModel.findById(point.destinationId);
+
+    this.view.pointTypeView.setValue(point.type);
+    this.view.destinationView.setLabel(pointTitleMap[point.type]);
+    this.view.destinationView.setValue(destination.name);
+    this.updateOffersView(point.offerIds);
+  }
+
+  /**
+   * @param {string[]} offersIds
+   */
+  updateOffersView(offersIds = []) {
+
+  }
+
+  /**
    * @override
    */
   handleNavigation() {
     if (this.location.pathname === '/new') {
+      const point = this.pointsModel.item();
+
+      point.type = PointType.BUS;
+      point.destinationId = this.destinationsModel.item(0).id;
+      point.startDate = (new Date()).toJSON();
+      point.endDate = (new Date()).toJSON();
+      point.basePrice = 1;
+
       this.view.open();
+      this.updateView(point);
     } else {
       this.view.close(false);
     }
@@ -50,5 +79,13 @@ export default class NewPointEditorPresenter extends Presenter {
 
   handleViewClose() {
     this.navigate('/');
+  }
+
+  handlePointTypeViewChange() {
+    const pointType = this.view.pointTypeView.getValue();
+
+    this.view.destinationView.setLabel(pointTitleMap[pointType]);
+    // TODO: Обновить список предложений
+    // updateOffersView();
   }
 }

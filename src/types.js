@@ -109,4 +109,10 @@
  * @typedef {import('./views/new-point-editor-view').default} NewPointEditorView
  */
 
-
+/**
+ * @typedef OfferToggleViewState
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {string} price
+ * @prop {boolean} checked
+ */
