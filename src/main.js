@@ -56,7 +56,7 @@ const offerGroupsModel = new CollectionModel({
 });
 
 const models = [pointsModel, destinationsModel, offerGroupsModel];
-
+const {log} = console;
 const newPointButtonView = document.querySelector('.trip-main__event-add-btn');
 const filterView = document.querySelector(String(FilterView));
 const sortView = document.querySelector(String(SortView));
@@ -75,6 +75,6 @@ Promise.all(
     new NewPointEditorPresenter(newPointEditorView, models);
   })
 
-  .catch(() => {
-    // log(error);
+  .catch((error) => {
+    log(error);
   });

@@ -52,7 +52,7 @@ export default class OffersView extends View {
    * @param {OfferToggleViewState[]} states
    */
   setOptions(states) {
-    const optionsHtml = states.map(this.createOptionHtml.join(''));
+    const optionsHtml = states.map(this.createOptionHtml).join('');
 
     this.querySelector('div').insertAdjacentHTML('beforeend', optionsHtml);
   }

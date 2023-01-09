@@ -18,9 +18,8 @@ export default class NewPointEditorPresenter extends Presenter {
 
     const destinationOptions =
       this.destinationsModel.listAll().map((item) => ({title: '', value: item.name}));
-
+    //
     this.view.destinationView.setOptions(destinationOptions);
-
 
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));
     this.view.addEventListener('reset', this.handleViewReset.bind(this));
@@ -43,7 +42,12 @@ export default class NewPointEditorPresenter extends Presenter {
    * @param {string[]} offersIds
    */
   updateOffersView(offersIds = []) {
+    const eventType = this.view.pointTypeView.getValue();
 
+    const offers = this.offerGroupsModel.findById(eventType).items;
+
+    // this.view.offersView.hidden = ???;
+    this.view.offersView.setOptions(offers);
   }
 
   /**
@@ -85,7 +89,7 @@ export default class NewPointEditorPresenter extends Presenter {
     const pointType = this.view.pointTypeView.getValue();
 
     this.view.destinationView.setLabel(pointTitleMap[pointType]);
-    // TODO: Обновить список предложений
-    // updateOffersView();
+    // Обновить список предложений
+    this.updateOffersView();
   }
 }
