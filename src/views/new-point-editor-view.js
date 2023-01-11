@@ -3,7 +3,7 @@ import {html} from '../utils';
 import PointTypeView from './common/point-type-view';
 import DestinationView from './common/destination-view';
 import DateTimesView from './common/date-times-view';
-import BasicPriceView from './common/basic-price-view';
+import BasePriceView from './common/base-price-view';
 import OffersView from './common/offers-view';
 import DestinationDetailsView from './common/destination-details-view';
 
@@ -53,7 +53,7 @@ export default class NewPointEditorView extends View {
           <${PointTypeView}></${PointTypeView}>
           <${DestinationView}></${DestinationView}>
           <${DateTimesView}></${DateTimesView}>
-          <${BasicPriceView}></${BasicPriceView}>
+          <${BasePriceView}></${BasePriceView}>
 
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Cancel</button>

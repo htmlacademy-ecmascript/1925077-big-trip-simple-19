@@ -12,7 +12,7 @@ export default class NewPointEditorPresenter extends Presenter {
 
     const pointTypeOptions =
       Object.entries(pointTitleMap).map(([value, title]) => ({title, value}));
-
+    //
     this.view.pointTypeView.setOptions(pointTypeOptions);
     this.view.pointTypeView.addEventListener('change', this.handlePointTypeViewChange.bind(this));
 
@@ -38,6 +38,9 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.pointTypeView.setValue(point.type);
     this.view.destinationView.setLabel(pointTitleMap[point.type]);
     this.view.destinationView.setValue(destination.name);
+
+    // this.view.basePrice.setValue(point.basePrice);
+
     this.updateOffersView(point.offerIds);
     this.updateDestinationDetailsView(destination);
   }
@@ -81,7 +84,7 @@ export default class NewPointEditorPresenter extends Presenter {
       point.destinationId = this.destinationsModel.item(0).id;
       point.startDate = (new Date()).toJSON();
       point.endDate = (new Date()).toJSON();
-      point.basePrice = 1;
+      point.basePrice = 100;
       point.offerIds = ['1', '2', '3'];
 
       this.view.open();
@@ -110,7 +113,6 @@ export default class NewPointEditorPresenter extends Presenter {
     const pointType = this.view.pointTypeView.getValue();
 
     this.view.destinationView.setLabel(pointTitleMap[pointType]);
-    // Обновить список предложений
     this.updateOffersView();
   }
 
