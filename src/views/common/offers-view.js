@@ -36,12 +36,9 @@ export default class OffersView extends View {
         <label
           class="event__offer-label"
           for="event-offer-${state.id}">
-          <span class="event__offer-title">Add luggage</span>
+          <span class="event__offer-title">${state.title}</span>
           &plus;&euro;&nbsp;
-          <span
-            class="event__offer-price">
-            ${state.price}
-          </span>
+          <span class="event__offer-price">${state.price}</span>
         </label>
       </div>
     `;
@@ -54,7 +51,17 @@ export default class OffersView extends View {
   setOptions(states) {
     const optionsHtml = states.map(this.createOptionHtml).join('');
 
-    this.querySelector('div').insertAdjacentHTML('beforeend', optionsHtml);
+    // this.querySelector('div').insertAdjacentHTML('beforeend', optionsHtml);
+    this.querySelector('div').innerHTML = optionsHtml;
+  }
+
+  getValues() {
+    /**
+     * @type {NodeListOf<HTMLInputElement>}
+     */
+    const views = this.querySelectorAll(':checked');
+
+    return [...views].map((view) => view.value);
   }
 }
 

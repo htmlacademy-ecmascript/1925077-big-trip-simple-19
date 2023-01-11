@@ -1,5 +1,6 @@
 import { PointType } from '../enums';
 import { pointTitleMap } from '../maps';
+import {formatNumber} from '../utils';
 import Presenter from './presenter';
 
 /**
@@ -20,6 +21,8 @@ export default class NewPointEditorPresenter extends Presenter {
       this.destinationsModel.listAll().map((item) => ({title: '', value: item.name}));
     //
     this.view.destinationView.setOptions(destinationOptions);
+    this.view.destinationView.addEventListener('input', this.handleDestinationViewInput.bind(this));
+
 
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));
     this.view.addEventListener('reset', this.handleViewReset.bind(this));
@@ -36,18 +39,35 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.destinationView.setLabel(pointTitleMap[point.type]);
     this.view.destinationView.setValue(destination.name);
     this.updateOffersView(point.offerIds);
+    this.updateDestinationDetailsView(destination);
   }
 
   /**
    * @param {string[]} offersIds
    */
   updateOffersView(offersIds = []) {
-    const eventType = this.view.pointTypeView.getValue();
+    const pointType = this.view.pointTypeView.getValue();
+    const offerGroup = this.offerGroupsModel.findById(pointType);
 
-    const offers = this.offerGroupsModel.findById(eventType).items;
+    const options = offerGroup.items.map((offer) => ({
+      ...offer,
+      price: formatNumber(offer.price),
+      checked: offersIds.includes(offer.id)
+    }));
 
-    // this.view.offersView.hidden = ???;
-    this.view.offersView.setOptions(offers);
+    this.view.offersView.setOptions(options);
+    this.view.offersView.hidden = !options.length;
+  }
+
+  /**
+   * @param {DestinationAdapter} [destination]
+   */
+  updateDestinationDetailsView(destination) {
+    this.view.destinationDetailsView.hidden = !destination;
+
+    if (destination) {
+      this.view.destinationDetailsView.setContent(destination);
+    }
   }
 
   /**
@@ -62,6 +82,7 @@ export default class NewPointEditorPresenter extends Presenter {
       point.startDate = (new Date()).toJSON();
       point.endDate = (new Date()).toJSON();
       point.basePrice = 1;
+      point.offerIds = ['1', '2', '3'];
 
       this.view.open();
       this.updateView(point);
@@ -91,5 +112,12 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.destinationView.setLabel(pointTitleMap[pointType]);
     // Обновить список предложений
     this.updateOffersView();
+  }
+
+  handleDestinationViewInput() {
+    const destinationName = this.view.destinationView.getValue();
+    const destination = this.destinationsModel.findBy('name', destinationName);
+
+    this.updateDestinationDetailsView(destination);
   }
 }
