@@ -10,8 +10,6 @@ export default class SortPresenter extends Presenter {
   constructor() {
     super(...arguments);
 
-    // console.log(sortTitleMap);
-
     const options = Object.entries(sortTitleMap).map(([value, title]) => ({ title, value }));
     this.view.setOptions(options);
     this.view.setDisability(Object.values(sortDisabilityMap));
@@ -30,5 +28,7 @@ export default class SortPresenter extends Presenter {
     const sortType = this.view.getValue();
 
     this.pointsModel.setSort(sortCallbackMap[sortType]);
+
+    this.navigate('/');
   }
 }

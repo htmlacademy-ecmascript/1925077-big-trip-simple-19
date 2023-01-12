@@ -67,12 +67,12 @@ export default class NewPointEditorView extends View {
     `;
   }
 
-  open () {
+  open() {
     this.listView.prepend(this);
     document.addEventListener('keydown', this);
   }
 
-  close (notify = true) {
+  close(notify = true) {
     this.remove();
     document.removeEventListener('keydown', this);
 
