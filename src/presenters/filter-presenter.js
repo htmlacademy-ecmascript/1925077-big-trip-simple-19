@@ -9,7 +9,6 @@ import Presenter from './presenter';
 export default class FilterPresenter extends Presenter {
   constructor() {
     super(...arguments);
-    // console.log(filterTitleMap);
 
     const options = Object.entries(filterTitleMap).map(([value, title]) => ({title, value}));
     this.view.setOptions(options);
@@ -27,6 +26,7 @@ export default class FilterPresenter extends Presenter {
   handleViewChange() {
     const filterType = this.view.getValue();
 
+    this.navigate('/');
     this.pointsModel.setFilter(filterCallbackMap[filterType]);
   }
 }

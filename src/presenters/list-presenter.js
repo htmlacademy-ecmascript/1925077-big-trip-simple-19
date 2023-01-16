@@ -15,9 +15,10 @@ export default class ListPresenter extends Presenter {
   }
 
   updateView() {
-    this.view.setItems(
-      this.pointsModel.list().map(this.createPointViewState, this)
-    );
+    const points = this.pointsModel.list();
+    const pointViewStates = points.map(this.createPointViewState, this);
+
+    this.view.setItems(pointViewStates);
   }
 
   /**
@@ -26,6 +27,7 @@ export default class ListPresenter extends Presenter {
   createPointViewState(point) {
     const destination = this.destinationsModel.findById(point.destinationId);
     const offerGroup = this.offerGroupsModel.findById(point.type);
+
     const offerViewStates = offerGroup.items
       .filter((offer) =>
         point.offerIds.includes(offer.id)

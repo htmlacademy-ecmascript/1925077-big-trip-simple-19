@@ -51,7 +51,6 @@ export default class OffersView extends View {
   setOptions(states) {
     const optionsHtml = states.map(this.createOptionHtml).join('');
 
-    // this.querySelector('div').insertAdjacentHTML('beforeend', optionsHtml);
     this.querySelector('div').innerHTML = optionsHtml;
   }
 
