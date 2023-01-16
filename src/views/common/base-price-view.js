@@ -13,11 +13,17 @@ export default class BasePriceView extends View {
    */
   createHtml() {
     return html`
-        <label class="event__label" for="event-price-1">
-            <span class="visually-hidden">Price</span>
-            &euro;
-        </label>
-        <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price">
+      <label class="event__label" for="event-price-1">
+          <span class="visually-hidden">Price</span>
+          &euro;
+      </label>
+      <input
+        class="event__input  event__input--price"
+        id="event-price-1"
+        type="number"
+        name="event-price"
+        min="1"
+        max="999999">
     `;
   }
 
@@ -25,17 +31,12 @@ export default class BasePriceView extends View {
    * @param {number} value
    */
   setValue(value) {
-    this.querySelector('.event__input--price').setAttribute('value', `${value}`);
+    this.querySelector('input').valueAsNumber = value;
   }
 
 
   getValue() {
-    /**
-     * @type {HTMLInputElement}
-     */
-    this.inputView = this.querySelector('.event__input--price');
-
-    return this.inputView.value;
+    return this.querySelector('input').valueAsNumber;
   }
 
 }

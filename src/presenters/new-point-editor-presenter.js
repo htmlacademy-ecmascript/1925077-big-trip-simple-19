@@ -24,6 +24,11 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.destinationView.addEventListener('input', this.handleDestinationViewInput.bind(this));
 
 
+    this.view.datesView.setConfig({
+      dateFormat: 'd/m/y H:i',
+      locale: {firstDayOfWeek: 1, 'time_24hr': true}
+    });
+
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));
     this.view.addEventListener('reset', this.handleViewReset.bind(this));
     this.view.addEventListener('close', this.handleViewClose.bind(this));
@@ -38,8 +43,8 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.pointTypeView.setValue(point.type);
     this.view.destinationView.setLabel(pointTitleMap[point.type]);
     this.view.destinationView.setValue(destination.name);
-
-    // this.view.basePrice.setValue(point.basePrice);
+    this.view.datesView.setValues([point.startDate, point.endDate]);
+    this.view.basePriceView.setValue(point.basePrice);
 
     this.updateOffersView(point.offerIds);
     this.updateDestinationDetailsView(destination);
@@ -84,7 +89,7 @@ export default class NewPointEditorPresenter extends Presenter {
       point.destinationId = this.destinationsModel.item(0).id;
       point.startDate = (new Date()).toJSON();
       point.endDate = (new Date()).toJSON();
-      point.basePrice = 100;
+      point.basePrice = 1234;
       point.offerIds = ['1', '2', '3'];
 
       this.view.open();
@@ -97,8 +102,20 @@ export default class NewPointEditorPresenter extends Presenter {
   /**
    * @param {SubmitEvent} event
    */
-  handleViewSubmit(event) {
+  async handleViewSubmit(event) {
     event.preventDefault();
+
+    this.view.awaitSave(true);
+
+    // try {}
+
+    // catch (exception) {
+    //   console.log(exception);
+
+    //   this.view.shake();
+    // }
+
+    this.view.awaitSave(false);
   }
 
   handleViewReset() {
