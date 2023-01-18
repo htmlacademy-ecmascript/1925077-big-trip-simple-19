@@ -99,15 +99,21 @@ export default class DatesView extends View {
     ];
   }
 
+  // onChange() {
+  //   console.log('********');
+  // }
+
   /**
    * @param {KeyboardEvent} event
    */
   handleKeydown(event) {
     if (event.key === 'Escape' && (
-      this.#startDateCalendar.isOpen ||
-      this.#endDateCalendar.isOpen
+      this.#startDateCalendar.isOpen
+      || this.#endDateCalendar.isOpen
+      || this.#startDateCalendar.config.onChange
     )) {
       event.stopPropagation();
+      event.preventDefault();
       // TODO: fix me
 
       this.#endDateCalendar.close();

@@ -1,6 +1,8 @@
+// import PointAdapter from '../adapters/point-adapter';
 import { PointType } from '../enums';
 import { pointTitleMap } from '../maps';
 import {formatNumber} from '../utils';
+// import PointView from '../views/point-view';
 import Presenter from './presenter';
 
 /**
@@ -103,17 +105,38 @@ export default class NewPointEditorPresenter extends Presenter {
    * @param {SubmitEvent} event
    */
   async handleViewSubmit(event) {
+    const {log} = console;
+
     event.preventDefault();
 
     this.view.awaitSave(true);
 
-    // try {}
+    try {
+      const point = this.pointsModel.item();
 
-    // catch (exception) {
-    //   console.log(exception);
+      point.type = this.view.pointTypeView.getValue();
+      point.destinationId = this.view.destinationDetailsView.id;
+      point.startDate = this.view.datesView.getValues()[0];
+      point.endDate = this.view.datesView.getValues()[1];
+      point.basePrice = this.view.basePriceView.getValue();
+      point.offerIds = this.view.offersView.getValues();
 
-    //   this.view.shake();
-    // }
+
+      await this.pointsModel.add(point);
+      this.view.close();
+    }
+
+    catch (exception) {
+      log(`
+      ++++++++++============
+      **********************
+      **** ${exception} ****
+      **********************
+      0000000000000009999999
+      `);
+
+      this.view.shake();
+    }
 
     this.view.awaitSave(false);
   }
