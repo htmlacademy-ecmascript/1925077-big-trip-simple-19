@@ -1,12 +1,11 @@
-// import PointAdapter from '../adapters/point-adapter';
 import { PointType } from '../enums';
 import { pointTitleMap } from '../maps';
 import {formatNumber} from '../utils';
-// import PointView from '../views/point-view';
 import Presenter from './presenter';
 
 /**
- * @extends {Presenter<NewPointEditorView>}
+ * @template {NewPointEditorView} View
+ * @extends {Presenter<View>}
  */
 export default class NewPointEditorPresenter extends Presenter {
   constructor() {
@@ -91,14 +90,21 @@ export default class NewPointEditorPresenter extends Presenter {
       point.destinationId = this.destinationsModel.item(0).id;
       point.startDate = (new Date()).toJSON();
       point.endDate = (new Date()).toJSON();
-      point.basePrice = 1234;
-      point.offerIds = ['1', '2', '3'];
+      point.basePrice = 100;
+      point.offerIds = [];
 
       this.view.open();
       this.updateView(point);
     } else {
       this.view.close(false);
     }
+  }
+
+  /**
+   * @param {PointAdapter} point
+   */
+  async save(point) {
+    await this.pointsModel.add(point);
   }
 
   /**
@@ -113,16 +119,19 @@ export default class NewPointEditorPresenter extends Presenter {
 
     try {
       const point = this.pointsModel.item();
+      const destinationName = this.view.destinationView.getValue();
+      const destination = this.destinationsModel.findBy('name', destinationName);
+      const [startDate, endDate] = this.view.datesView.getValues();
+
 
       point.type = this.view.pointTypeView.getValue();
-      point.destinationId = this.view.destinationDetailsView.id;
-      point.startDate = this.view.datesView.getValues()[0];
-      point.endDate = this.view.datesView.getValues()[1];
+      point.destinationId = destination?.id;
+      point.startDate = startDate;
+      point.endDate = endDate;
       point.basePrice = this.view.basePriceView.getValue();
       point.offerIds = this.view.offersView.getValues();
 
-
-      await this.pointsModel.add(point);
+      await this.save(point);
       this.view.close();
     }
 
@@ -141,7 +150,11 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.awaitSave(false);
   }
 
-  handleViewReset() {
+  /**
+   * @param {Event} event
+   */
+  handleViewReset(event) {
+    void event;
     this.view.close();
   }
 

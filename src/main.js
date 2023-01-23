@@ -20,10 +20,12 @@ import FilterPresenter from './presenters/filter-presenter';
 import SortPresenter from './presenters/sort-presenter';
 import NewPointButtonPresenter from './presenters/new-point-button-presenter';
 import NewPointEditorPresenter from './presenters/new-point-editor-presenter';
+import PointEditorView from './views/point-editor-view';
+import PointEditorPresenter from './presenters/point-editor-presenter';
 
 
 const BASE = 'https://19.ecmascript.pages.academy/big-trip-simple';
-const AUTH = 'Basic dfgs345345yh';
+const AUTH = 'Basic dfgs345345esddfsdfsdfweryhdfg';
 
 /**
  * @type {Store<Point>}
@@ -56,13 +58,14 @@ const offerGroupsModel = new CollectionModel({
 });
 
 const models = [pointsModel, destinationsModel, offerGroupsModel];
-const {log} = console;
 const newPointButtonView = document.querySelector('.trip-main__event-add-btn');
 const filterView = document.querySelector(String(FilterView));
 const sortView = document.querySelector(String(SortView));
 const listView = document.querySelector(String(ListView));
 const newPointEditorView = new NewPointEditorView(listView);
+const pointEditorView = new PointEditorView(listView);
 
+const {log} = console;
 
 Promise.all(
   models.map((model) => model.ready())
@@ -73,6 +76,7 @@ Promise.all(
     new FilterPresenter(filterView, models);
     new ListPresenter(listView, models);
     new NewPointEditorPresenter(newPointEditorView, models);
+    new PointEditorPresenter(pointEditorView, models);
   })
 
   .catch((error) => {
