@@ -25,7 +25,7 @@ import PointEditorPresenter from './presenters/point-editor-presenter';
 
 
 const BASE = 'https://19.ecmascript.pages.academy/big-trip-simple';
-const AUTH = 'Basic dfgs345345esddfsdfsdfweryhdfg';
+const AUTH = 'Basic dfgasyhdfg';
 
 /**
  * @type {Store<Point>}

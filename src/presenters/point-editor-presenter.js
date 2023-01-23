@@ -39,7 +39,28 @@ export default class PointEditorPresenter extends NewPointEditorPresenter {
    * @param {Event} event
    */
   async handleViewReset(event) {
+    const {log} = console;
+
     event.preventDefault();
-    // перезаписать обработчик сброса формы. действия, сопряженные с удалением
+    this.view.awaitDelete(true);
+
+    try {
+      const id = this.view.pointView.getAttribute('data-id');
+
+      this.pointsModel.delete(id);
+      this.view.close();
+    }
+
+    catch (exception) {
+      log(`
+      **********************
+      **** ${exception} ****
+      **********************
+      `);
+
+      this.view.shake();
+    }
+
+    this.view.awaitDelete(false);
   }
 }
