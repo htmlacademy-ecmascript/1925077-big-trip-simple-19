@@ -106,8 +106,14 @@ export default class NewPointEditorView extends View {
     const text = saveButtonTextMap[Number(flag)];
 
     this.querySelector('.event__save-btn').textContent = text;
-
     this.uiBlockerView.toggle(flag);
+  }
+
+  /**
+   * @param {string} name
+   */
+  findByName(name) {
+    return this.querySelector('form').elements[name];
   }
 
   /**

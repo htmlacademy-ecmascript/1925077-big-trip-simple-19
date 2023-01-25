@@ -22,10 +22,11 @@ import NewPointButtonPresenter from './presenters/new-point-button-presenter';
 import NewPointEditorPresenter from './presenters/new-point-editor-presenter';
 import PointEditorView from './views/point-editor-view';
 import PointEditorPresenter from './presenters/point-editor-presenter';
+import EmptyListPresenter from './presenters/empty-list-presenter';
 
 
 const BASE = 'https://19.ecmascript.pages.academy/big-trip-simple';
-const AUTH = 'Basic dfgasyhdfg';
+const AUTH = 'Basic dfgassdf345yhdfg';
 
 /**
  * @type {Store<Point>}
@@ -62,6 +63,7 @@ const newPointButtonView = document.querySelector('.trip-main__event-add-btn');
 const filterView = document.querySelector(String(FilterView));
 const sortView = document.querySelector(String(SortView));
 const listView = document.querySelector(String(ListView));
+const emptyListView = document.querySelector('.trip-events__msg');
 const newPointEditorView = new NewPointEditorView(listView);
 const pointEditorView = new PointEditorView(listView);
 
@@ -75,10 +77,12 @@ Promise.all(
     new SortPresenter(sortView, models);
     new FilterPresenter(filterView, models);
     new ListPresenter(listView, models);
+    new EmptyListPresenter(emptyListView, models);
     new NewPointEditorPresenter(newPointEditorView, models);
     new PointEditorPresenter(pointEditorView, models);
   })
 
   .catch((error) => {
     log(error);
+    emptyListView.textContent = error;
   });

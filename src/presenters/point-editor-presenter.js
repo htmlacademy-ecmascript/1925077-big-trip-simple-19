@@ -4,10 +4,6 @@ import NewPointEditorPresenter from './new-point-editor-presenter';
  * @extends {NewPointEditorPresenter<PointEditorView>}
  */
 export default class PointEditorPresenter extends NewPointEditorPresenter {
-  constructor() {
-    super(...arguments);
-
-  }
 
   /**
    * @override
@@ -45,18 +41,14 @@ export default class PointEditorPresenter extends NewPointEditorPresenter {
     this.view.awaitDelete(true);
 
     try {
-      const id = this.view.pointView.getAttribute('data-id');
+      const id = this.view.dataset.id;
 
       this.pointsModel.delete(id);
       this.view.close();
     }
 
     catch (exception) {
-      log(`
-      **********************
-      **** ${exception} ****
-      **********************
-      `);
+      log(`E R R O R ==> ** ${exception} ** <== E R R O R`);
 
       this.view.shake();
     }
