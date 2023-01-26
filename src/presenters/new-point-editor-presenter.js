@@ -88,8 +88,8 @@ export default class NewPointEditorPresenter extends Presenter {
 
       point.type = PointType.BUS;
       point.destinationId = this.destinationsModel.item(0).id;
-      point.startDate = (new Date()).toJSON();
-      point.endDate = (new Date()).toJSON();
+      point.startDate = new Date().toJSON();
+      point.endDate = new Date().toJSON();
       point.basePrice = 100;
       point.offerIds = [];
 
@@ -111,8 +111,6 @@ export default class NewPointEditorPresenter extends Presenter {
    * @param {SubmitEvent} event
    */
   async handleViewSubmit(event) {
-    const {log} = console;
-
     event.preventDefault();
 
     this.view.awaitSave(true);
@@ -136,14 +134,11 @@ export default class NewPointEditorPresenter extends Presenter {
     }
 
     catch (exception) {
-      log(`E R R O R ==> ** ${exception} ** <== E R R O R`);
-
       this.view.shake();
 
       if (exception.cause?.error) {
         const [{fieldName}] = exception.cause.error;
 
-        log(fieldName);
         this.view.findByName(fieldName)?.focus();
       }
     }

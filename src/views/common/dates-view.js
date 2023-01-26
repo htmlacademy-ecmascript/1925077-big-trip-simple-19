@@ -99,10 +99,6 @@ export default class DatesView extends View {
     ];
   }
 
-  // onChange() {
-  //   console.log('********');
-  // }
-
   /**
    * @param {KeyboardEvent} event
    */

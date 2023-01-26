@@ -26,7 +26,7 @@ import EmptyListPresenter from './presenters/empty-list-presenter';
 
 
 const BASE = 'https://19.ecmascript.pages.academy/big-trip-simple';
-const AUTH = 'Basic dfgassdf345yhdfg';
+const AUTH = 'Basic dfd345yhdfg';
 
 /**
  * @type {Store<Point>}
@@ -67,8 +67,6 @@ const emptyListView = document.querySelector('.trip-events__msg');
 const newPointEditorView = new NewPointEditorView(listView);
 const pointEditorView = new PointEditorView(listView);
 
-const {log} = console;
-
 Promise.all(
   models.map((model) => model.ready())
 )
@@ -83,6 +81,5 @@ Promise.all(
   })
 
   .catch((error) => {
-    log(error);
     emptyListView.textContent = error;
   });
