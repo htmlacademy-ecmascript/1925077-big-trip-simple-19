@@ -4,7 +4,8 @@ import {formatNumber} from '../utils';
 import Presenter from './presenter';
 
 /**
- * @extends {Presenter<NewPointEditorView>}
+ * @template {NewPointEditorView} View
+ * @extends {Presenter<View>}
  */
 export default class NewPointEditorPresenter extends Presenter {
   constructor() {
@@ -87,16 +88,23 @@ export default class NewPointEditorPresenter extends Presenter {
 
       point.type = PointType.BUS;
       point.destinationId = this.destinationsModel.item(0).id;
-      point.startDate = (new Date()).toJSON();
-      point.endDate = (new Date()).toJSON();
-      point.basePrice = 1234;
-      point.offerIds = ['1', '2', '3'];
+      point.startDate = new Date().toJSON();
+      point.endDate = new Date().toJSON();
+      point.basePrice = 100;
+      point.offerIds = [];
 
       this.view.open();
       this.updateView(point);
     } else {
       this.view.close(false);
     }
+  }
+
+  /**
+   * @param {PointAdapter} point
+   */
+  async save(point) {
+    await this.pointsModel.add(point);
   }
 
   /**
@@ -107,18 +115,42 @@ export default class NewPointEditorPresenter extends Presenter {
 
     this.view.awaitSave(true);
 
-    // try {}
+    try {
+      const point = this.pointsModel.item();
+      const destinationName = this.view.destinationView.getValue();
+      const destination = this.destinationsModel.findBy('name', destinationName);
+      const [startDate, endDate] = this.view.datesView.getValues();
 
-    // catch (exception) {
-    //   console.log(exception);
 
-    //   this.view.shake();
-    // }
+      point.type = this.view.pointTypeView.getValue();
+      point.destinationId = destination?.id;
+      point.startDate = startDate;
+      point.endDate = endDate;
+      point.basePrice = this.view.basePriceView.getValue();
+      point.offerIds = this.view.offersView.getValues();
+
+      await this.save(point);
+      this.view.close();
+    }
+
+    catch (exception) {
+      this.view.shake();
+
+      if (exception.cause?.error) {
+        const [{fieldName}] = exception.cause.error;
+
+        this.view.findByName(fieldName)?.focus();
+      }
+    }
 
     this.view.awaitSave(false);
   }
 
-  handleViewReset() {
+  /**
+   * @param {Event} event
+   */
+  handleViewReset(event) {
+    void event;
     this.view.close();
   }
 

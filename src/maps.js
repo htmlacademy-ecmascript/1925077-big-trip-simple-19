@@ -30,6 +30,15 @@ export const filterCallbackMap = {
 };
 
 /**
+ * Значение отображаемого текста зависит от выбранного фильтра:
+ * Past — 'There are no past events now'
+ */
+export const emptyListTextMap = {
+  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
+  [FilterType.FUTURE]: 'There are no future events now'
+};
+
+/**
  * @type {Record<string,SortCallback<PointAdapter>>}
  */
 export const sortCallbackMap = {
@@ -58,4 +67,9 @@ export const pointIconMap = Object.fromEntries(Object.values(PointType).map((val
 export const saveButtonTextMap = {
   [ButtonState.DEFAULT]: 'Save',
   [ButtonState.PRESSED]: 'Saving...'
+};
+
+export const deletelButtonTextMap = {
+  [ButtonState.DEFAULT]: 'Delete',
+  [ButtonState.PRESSED]: 'Deleting...'
 };

@@ -10,15 +10,30 @@ export default class ListPresenter extends Presenter {
     super(...arguments);
 
     this.updateView();
+
+    this.view.addEventListener('edit', this.handleViewEdit.bind(this));
     this.pointsModel.addEventListener('filter', this.handlePointsModelFilter.bind(this));
     this.pointsModel.addEventListener('sort', this.handlePointsModelSort.bind(this));
+    this.pointsModel.addEventListener('add', this.handlePointsModeAdd.bind(this));
+    this.pointsModel.addEventListener('update', this.handlePointsModeUpdate.bind(this));
+    this.pointsModel.addEventListener('delete', this.handlePointDelete.bind(this));
   }
 
-  updateView() {
+  /**
+   * @param {PointAdapter} [targetPoint]
+   */
+  updateView(targetPoint) {
     const points = this.pointsModel.list();
     const pointViewStates = points.map(this.createPointViewState, this);
+    const pointViews = this.view.setItems(pointViewStates);
 
-    this.view.setItems(pointViewStates);
+    if (targetPoint) {
+      this.view.findById(targetPoint.id)?.fadeInLeft();
+    } else {
+      pointViews.forEach((pointView, index) => {
+        pointView.fadeInLeft({delay: 100 * index});
+      });
+    }
   }
 
   /**
@@ -38,17 +53,24 @@ export default class ListPresenter extends Presenter {
       }));
 
     return {
+      id: point.id,
       date: formatDate(point.startDate),
       icon: pointIconMap[point.type],
       title: `${pointTitleMap[point.type]} ${destination.name}`,
-      offers: offerViewStates,
       startTime: formatTime(point.startDate),
       endTime: formatTime(point.endDate),
       basePrice: formatNumber(point.basePrice),
-
       startDate: point.startDate,
-      endDate: point.endDate
+      endDate: point.endDate,
+      offers: offerViewStates
     };
+  }
+
+  /**
+   * @param {CustomEvent & {target: PointView}} event
+   */
+  handleViewEdit(event) {
+    this.navigate('/edit', event.target.dataset);
   }
 
   handlePointsModelFilter() {
@@ -57,5 +79,26 @@ export default class ListPresenter extends Presenter {
 
   handlePointsModelSort() {
     this.updateView();
+  }
+
+  /**
+   * @param {CustomEvent<PointAdapter>} event
+   */
+  handlePointsModeAdd(event) {
+    this.updateView(event.detail);
+  }
+
+  /**
+   * @param {CustomEvent<PointAdapter>} event
+   */
+  handlePointDelete(event) {
+    this.updateView(event.detail);
+  }
+
+  /**
+   * @param {CustomEvent<{newItem: PointAdapter}>} event
+   */
+  handlePointsModeUpdate(event) {
+    this.updateView(event.detail.newItem);
   }
 }
