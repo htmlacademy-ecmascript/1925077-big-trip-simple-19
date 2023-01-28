@@ -110,7 +110,6 @@ export default class DatesView extends View {
     )) {
       event.stopPropagation();
       event.preventDefault();
-      // TODO: fix me
 
       this.#endDateCalendar.close();
       this.#startDateCalendar.close();

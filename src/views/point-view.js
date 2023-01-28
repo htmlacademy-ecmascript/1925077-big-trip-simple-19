@@ -65,14 +65,6 @@ export default class PointView extends View {
     `;
   }
 
-  // createEmptyOfferHtml() {
-  //   return html`
-  //     <li class="event__offer">
-  //       <span class="event__offer-title">No additional offers</span>
-  //     </li>
-  //   `;
-  // }
-
   /**
    * @param {OfferViewState[]} states
    */

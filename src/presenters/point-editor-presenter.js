@@ -23,7 +23,6 @@ export default class PointEditorPresenter extends NewPointEditorPresenter {
     if (this.location.pathname === '/edit') {
       const pointId = this.location.searchParams.get('id');
       const point = this.pointsModel.findById(pointId);
-      console.log(point);
 
       if (!point) {
         throw new Error(`Cannot edit point ${pointId} (it does not exist)`);
