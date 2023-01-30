@@ -51,9 +51,9 @@ const destinationsModel = new CollectionModel({
 /**
  * @type {Store<OfferGroup>}
  */
-const OfferGroupStore = new Store(`${BASE}/offers`, AUTH);
+const offerGroupStore = new Store(`${BASE}/offers`, AUTH);
 const offerGroupsModel = new CollectionModel({
-  store: OfferGroupStore,
+  store: offerGroupStore,
   adapt: (item) => new OfferGroupAdapter(item)
 });
 
