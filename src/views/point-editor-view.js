@@ -11,7 +11,7 @@ export default class PointEditorView extends NewPointEditorView {
 
     this.awaitDelete(false);
     this.querySelector('header').insertAdjacentHTML('beforeend', this.createCloseButtonHtml());
-    this.addEventListener('click', this.handleClick.bind(this));
+    this.addEventListener('click', this.handleClick);
   }
 
   /**

@@ -14,8 +14,8 @@ export default class BasePriceView extends View {
   createHtml() {
     return html`
       <label class="event__label" for="event-price-1">
-          <span class="visually-hidden">Price</span>
-          &euro;
+        <span class="visually-hidden">Price</span>
+        &euro;
       </label>
       <input
         class="event__input  event__input--price"
